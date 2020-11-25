@@ -12,6 +12,6 @@ void main() {
       bencode.encode({'key': 'value'}))); // => "d3:key5:valuee"
 
   var map = bencode.decode(Uint8List.fromList(utf8.encode(
-      'd3:key5:valuee'))); // => { key: "value" } , the string value is bytes array
+      'd3:key5:valuee')),stringEncoding: 'utf-8'); // => { key: "value" } , the string value is bytes array
   print(map);
 }
