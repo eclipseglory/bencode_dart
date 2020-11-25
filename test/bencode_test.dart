@@ -11,13 +11,13 @@ void main() {
   group('Tests for decoding - ', () {
     test('It with a basic value returns the string', () {
       var code = decode(stringToBytes('10:helloworld'));
-      var str = bytesToString(code);
+      var str = (code is Uint8List) ? bytesToString(code) : code;
       assert(str == 'helloworld');
     });
 
     test('It with a colon in them returns the correct string', () {
       var code = decode(stringToBytes('12:0.0.0.0:3000'));
-      var str = bytesToString(code);
+      var str = (code is Uint8List) ? bytesToString(code) : code;
       assert(str == '0.0.0.0:3000');
     });
 

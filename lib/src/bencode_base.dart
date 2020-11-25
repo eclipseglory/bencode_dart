@@ -14,7 +14,7 @@ class _Encode {
   int bytes = -1;
   bool floatConversionDetected = false;
   final _data;
-  var _buffer;
+  final _buffer;
   final int _offset;
 
   var buffE = Uint8List.fromList(utf8.encode('e')); // Buffer.from('e');
@@ -127,6 +127,8 @@ class _Encode {
 /// Decode bencoding format bytes to object.
 ///
 /// This method comes from https://github.com/benjreinhart/bencode-js , just transfer JS to Dart
+///
+/// If don't provide string encoding , decoder won't decode the string field , just return ```Uint8List```
 dynamic decode(Uint8List data, {int start, int end, String stringEncoding}) {
   if (data == null || data.isEmpty) {
     return null;
@@ -146,15 +148,12 @@ class _Decode {
   int _position = 0;
   String _stringEncoding;
   Uint8List _data;
-  int _bytes = 0;
 
-  _Decode(Uint8List data, {int start, int end, String stringEncoding}) {
-    _data = data;
+  _Decode(this._data, {int start, int end, String stringEncoding}) {
     _stringEncoding = stringEncoding?.toLowerCase();
     if (end != null && start != null) {
-      _data = data.sublist(start, end);
+      _data = _data.sublist(start, end);
     }
-    _bytes = _data.length;
   }
 
   int getIntFromBuffer(Uint8List buffer, int start, int end) {
