@@ -1,6 +1,6 @@
 A Dart library for implementing the encoding and decoding of the Bencode format.
 
-All codes come from [bencode.js](https://github.com/benjreinhart/bencode-js), include example and test codes , I just transfer them to Dart code.
+All codes come from [bencode.js][bencode.js], include example and test codes , I just transfer them to Dart code.
 
 ## Install
 
@@ -36,4 +36,5 @@ Input should be bytes list or String.
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+[tracker]: https://github.com/eclipseglory/bencode_dart/issues
+[bencode.js]:https://github.com/benjreinhart/bencode-js
