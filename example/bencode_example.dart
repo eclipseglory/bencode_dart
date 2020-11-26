@@ -11,7 +11,14 @@ void main() {
   print(String.fromCharCodes(
       bencode.encode({'key': 'value'}))); // => "d3:key5:valuee"
 
-  var map = bencode.decode(Uint8List.fromList(utf8.encode(
-      'd3:key5:valuee')),stringEncoding: 'utf-8'); // => { key: "value" } , the string value is bytes array
+  var map = bencode.decode(Uint8List.fromList(utf8.encode('d3:key5:valuee')),
+      stringEncoding:
+          'utf-8'); // => { key: "value" } , the string value is bytes array
+
   print(map);
+  // 中文测试
+  // TODO : 
+  var ccc = bencode.encode({'中文': 'ddd'});
+  var m1 = bencode.decode(ccc);
+  print(m1);
 }
