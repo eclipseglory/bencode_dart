@@ -31,6 +31,14 @@ main() {
 ### Decode
 Input should be bytes list or String.
 
+```dart
+import 'package:bencode/bencode.dart' as Bencode;
+
+main() {
+  var map = Bencode.decode(Uint8List.fromList('d3:key5:valuee'.codeUnits); // => { key: "value" } , the string value is bytes array
+
+  print(map);
+```
 
 ## Features and bugs
 
