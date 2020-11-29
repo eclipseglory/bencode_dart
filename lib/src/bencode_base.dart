@@ -226,7 +226,14 @@ class _Decode {
       var keyBuffer = buffer();
       // 这里要注意，有时候返回的key字符串用utf-8解析是会出错的
       // 比如访问某infohash是利用latin1编码的，这里用utf-8解码就会出错
-      if (keyBuffer is! String) keyBuffer = String.fromCharCodes(keyBuffer);
+      // 但是，在规范中规定几乎都要使用utf8，所以这里做一个判断，能解就接，不能接就换
+      if (keyBuffer is! String) {
+        try {
+          keyBuffer = utf8.decode(keyBuffer);
+        } catch (e) {
+          keyBuffer = String.fromCharCodes(keyBuffer);
+        }
+      }
       dict[keyBuffer] = next();
     }
 
