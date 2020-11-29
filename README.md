@@ -7,7 +7,7 @@ All codes come from [bencode.js][bencode.js], include example and test codes , I
 In your flutter or dart project add the dependency:
 ```
 dependencies:
-  bencode: ^1.0.0
+  bencode_dart: ^1.0.1
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ A simple usage example:
 Input parameter can be a String, Number, List, or Map. It will return a encoding bytes list ( ```Uint8List``` ).
 
 ```dart
-import 'package:bencode/bencode.dart' as Bencode;
+import 'package:bencode_dart/bencode_dart.dart' as Bencode;
 
 main() {
   Bencode.encode("string")         // => "6:string"
@@ -32,7 +32,7 @@ main() {
 Input should be bytes list or String.
 
 ```dart
-import 'package:bencode/bencode.dart' as Bencode;
+import 'package:bencode_dart/bencode_dart.dart' as Bencode;
 
 main() {
   var map = Bencode.decode(Uint8List.fromList('d3:key5:valuee'.codeUnits); // => { key: "value" } , the string value is bytes array

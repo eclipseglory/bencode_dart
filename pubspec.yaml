@@ -1,6 +1,6 @@
 name: bencode_dart
 description: A Dart library for implementing the encoding and decoding of the Bencode format.
-version: 1.0.0
+version: 1.0.1
 # homepage: none
 repository : https://github.com/eclipseglory/bencode_dart
 issue_tracker : https://github.com/eclipseglory/bencode_dart/issues
