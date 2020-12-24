@@ -83,8 +83,8 @@ class _Encode {
   }
 
   void string(buffers, String data) {
-    var bytesLength = Uint8List.fromList(utf8.encode(data)).lengthInBytes;
-    buffers.add(Uint8List.fromList(utf8.encode('${bytesLength}:${data}')));
+    var bytesLength = Uint8List.fromList(data.codeUnits).lengthInBytes;
+    buffers.add(Uint8List.fromList('${bytesLength}:${data}'.codeUnits));
   }
 
   void number(buffers, data) {
