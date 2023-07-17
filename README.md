@@ -5,9 +5,10 @@ All codes come from [bencode.js][bencode.js], include example and test codes , I
 ## Install
 
 In your flutter or dart project add the dependency:
+
 ```
 dependencies:
-  bencode_dart: ^1.0.1
+  bencode_dart: ^1.0.3
 ```
 
 ## Usage
@@ -15,7 +16,8 @@ dependencies:
 A simple usage example:
 
 ### Encode
-Input parameter can be a String, Number, List, or Map. It will return a encoding bytes list ( ```Uint8List``` ).
+
+Input parameter can be a String, Number, List, or Map. It will return a encoding bytes list ( `Uint8List` ).
 
 ```dart
 import 'package:bencode_dart/bencode_dart.dart' as Bencode;
@@ -29,6 +31,7 @@ main() {
 ```
 
 ### Decode
+
 Input should be bytes list or String.
 
 ```dart
@@ -45,4 +48,4 @@ main() {
 Please file feature requests and bugs at the [issue tracker][tracker].
 
 [tracker]: https://github.com/eclipseglory/bencode_dart/issues
-[bencode.js]:https://github.com/benjreinhart/bencode-js
+[bencode.js]: https://github.com/benjreinhart/bencode-js
