@@ -87,9 +87,6 @@ class _Encode {
   }
 
   void number(List<Uint8List> buffers, num data) {
-    if (data == -0) {
-      throw Exception('Invalid Integer');
-    }
     buffers.add(Uint8List.fromList(utf8.encode('i${data}e')));
   }
 
