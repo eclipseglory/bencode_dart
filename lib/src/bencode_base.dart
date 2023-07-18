@@ -222,9 +222,9 @@ class _Decode {
 
     while (_data[_position] != END_OF_TYPE) {
       var keyBuffer = buffer();
-      // 这里要注意，有时候返回的key字符串用utf-8解析是会出错的
-      // 比如访问某infohash是利用latin1编码的，这里用utf-8解码就会出错
-      // 但是，在规范中规定几乎都要使用utf8，所以这里做一个判断，能解就接，不能接就换
+      // It should be noted here that sometimes the returned key string will be wrong when parsed with utf-8
+      // For example, an infohash is encoded by latin1, and it will be wrong to decode it with utf-8.
+      // However, it is stipulated in the specification that utf8 is almost always used
       if (keyBuffer is! String) {
         try {
           keyBuffer = utf8.decode(keyBuffer);
