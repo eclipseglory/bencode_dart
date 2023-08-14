@@ -137,10 +137,15 @@ dynamic decode(Uint8List data, {int? start, int? end, String? stringEncoding}) {
 }
 
 class _Decode {
+  // ignore: constant_identifier_names
   static const int INTEGER_START = 0x69; // 'i'
+  // ignore: constant_identifier_names
   static const int STRING_DELIM = 0x3A; // ':'
+  // ignore: constant_identifier_names
   static const int DICTIONARY_START = 0x64; // 'd'
+  // ignore: constant_identifier_names
   static const int LIST_START = 0x6C; // 'l'
+  // ignore: constant_identifier_names
   static const int END_OF_TYPE = 0x65; // 'e'
 
   int _position = 0;
