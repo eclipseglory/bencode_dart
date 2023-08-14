@@ -15,3 +15,6 @@
 - Migrate to nullsafety
 - update dependencies
 - some linting and code style enhancments
+
+## 1.0.4
+- rename example
