@@ -8,7 +8,7 @@ In your flutter or dart project add the dependency:
 
 ```
 dependencies:
-  bencode_dart: ^1.0.3
+  b_encode_decode: ^1.0.3
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ A simple usage example:
 Input parameter can be a String, Number, List, or Map. It will return a encoding bytes list ( `Uint8List` ).
 
 ```dart
-import 'package:bencode_dart/bencode_dart.dart' as Bencode;
+import 'package:b_encode_decode/b_encode_decode.dart' as Bencode;
 
 main() {
   Bencode.encode("string")         // => "6:string"
@@ -35,7 +35,7 @@ main() {
 Input should be bytes list or String.
 
 ```dart
-import 'package:bencode_dart/bencode_dart.dart' as Bencode;
+import 'package:b_encode_decode/b_encode_decode.dart' as Bencode;
 
 main() {
   var map = Bencode.decode(Uint8List.fromList('d3:key5:valuee'.codeUnits); // => { key: "value" } , the string value is bytes array
@@ -47,5 +47,5 @@ main() {
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/eclipseglory/bencode_dart/issues
+[tracker]: https://github.com/moham96/b_encode_decode/issues
 [bencode.js]: https://github.com/benjreinhart/bencode-js

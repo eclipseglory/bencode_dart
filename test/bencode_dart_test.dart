@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:bencode_dart/bencode_dart.dart';
+import 'package:b_encode_decode/b_encode_decode.dart';
 import 'package:test/test.dart';
 
 /// All tests come from https://github.com/benjreinhart/bencode-js/blob/master/test
