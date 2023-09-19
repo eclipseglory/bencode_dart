@@ -5,17 +5,16 @@ import 'dart:typed_data';
 /// Encode objects to bencoding format bytes;
 ///
 /// This method comes from https://github.com/benjreinhart/bencode-js , just transfer JS to Dart
-Uint8List encode(dynamic data, [dynamic buffer, int offset]) {
-  if (data == null) return null;
+Uint8List encode(dynamic data, [dynamic buffer, int? offset]) {
+  if (data == null) return Uint8List(0);
   return _Encode(data, buffer, offset).encoding();
 }
 
 class _Encode {
   int bytes = -1;
-  bool floatConversionDetected = false;
-  final _data;
-  final _buffer;
-  final int _offset;
+  final dynamic _data;
+  final Uint8List? _buffer;
+  final int? _offset;
 
   var buffE = Uint8List.fromList(utf8.encode('e')); // Buffer.from('e');
   var buffD = Uint8List.fromList(utf8.encode('d')); //Buffer.from('d');
@@ -35,9 +34,9 @@ class _Encode {
     }));
     bytes = result.length;
 
-    if (_buffer is Uint8List) {
-      (_buffer as Uint8List).insertAll(_offset, result);
-      return _buffer;
+    if (_buffer != null) {
+      (_buffer as Uint8List).insertAll(_offset ?? 0, result);
+      return _buffer!;
     }
 
     return result;
@@ -77,26 +76,26 @@ class _Encode {
     // case 'arraybuffer': buffer(buffers, Buffer.from(data)); break;
   }
 
-  void buffer(buffers, Uint8List data) {
+  void buffer(List<Uint8List> buffers, Uint8List data) {
     buffers.add(Uint8List.fromList(utf8.encode('${data.length}:')));
     buffers.add(data);
   }
 
-  void string(buffers, String data) {
+  void string(List<Uint8List> buffers, String data) {
     var bytesLength = Uint8List.fromList(data.codeUnits).lengthInBytes;
-    buffers.add(Uint8List.fromList('${bytesLength}:${data}'.codeUnits));
+    buffers.add(Uint8List.fromList('$bytesLength:$data'.codeUnits));
   }
 
-  void number(buffers, data) {
+  void number(List<Uint8List> buffers, num data) {
     buffers.add(Uint8List.fromList(utf8.encode('i${data}e')));
   }
 
-  void dict(buffers, data) {
+  void dict(List<Uint8List> buffers, Map data) {
     buffers.add(buffD);
 
     var j = 0;
-    var k;
-    var keys = (data as Map).keys.toList()..sort();
+    dynamic k;
+    var keys = data.keys.toList()..sort();
     var kl = keys.length;
 
     for (; j < kl; j++) {
@@ -109,12 +108,11 @@ class _Encode {
     buffers.add(buffE);
   }
 
-  void list(buffers, data) {
-    var i = 0;
+  void list(List<Uint8List> buffers, List data) {
     var c = data.length;
     buffers.add(buffL);
 
-    for (; i < c; i++) {
+    for (var i = 0; i < c; i++) {
       if (data[i] == null) continue;
       _encode(buffers, data[i]);
     }
@@ -129,8 +127,8 @@ class _Encode {
 /// This method comes from https://github.com/benjreinhart/bencode-js , just transfer JS to Dart
 ///
 /// If don't provide string encoding , decoder won't decode the string field , just return ```Uint8List```
-dynamic decode(Uint8List data, {int start, int end, String stringEncoding}) {
-  if (data == null || data.isEmpty) {
+dynamic decode(Uint8List data, {int? start, int? end, String? stringEncoding}) {
+  if (data.isEmpty) {
     return null;
   } else {
     return _Decode(data, start: start, end: end, stringEncoding: stringEncoding)
@@ -139,17 +137,22 @@ dynamic decode(Uint8List data, {int start, int end, String stringEncoding}) {
 }
 
 class _Decode {
+  // ignore: constant_identifier_names
   static const int INTEGER_START = 0x69; // 'i'
+  // ignore: constant_identifier_names
   static const int STRING_DELIM = 0x3A; // ':'
+  // ignore: constant_identifier_names
   static const int DICTIONARY_START = 0x64; // 'd'
+  // ignore: constant_identifier_names
   static const int LIST_START = 0x6C; // 'l'
+  // ignore: constant_identifier_names
   static const int END_OF_TYPE = 0x65; // 'e'
 
   int _position = 0;
-  String _stringEncoding;
+  String? _stringEncoding;
   Uint8List _data;
 
-  _Decode(this._data, {int start, int end, String stringEncoding}) {
+  _Decode(this._data, {int? start, int? end, String? stringEncoding}) {
     _stringEncoding = stringEncoding?.toLowerCase();
     if (end != null && start != null) {
       _data = _data.sublist(start, end);
@@ -191,7 +194,7 @@ class _Decode {
   }
 
   dynamic next() {
-    if (_data == null || _data.isEmpty) return null;
+    if (_data.isEmpty) return null;
     switch (_data[_position]) {
       case DICTIONARY_START:
         return dictionary();
@@ -224,9 +227,9 @@ class _Decode {
 
     while (_data[_position] != END_OF_TYPE) {
       var keyBuffer = buffer();
-      // 这里要注意，有时候返回的key字符串用utf-8解析是会出错的
-      // 比如访问某infohash是利用latin1编码的，这里用utf-8解码就会出错
-      // 但是，在规范中规定几乎都要使用utf8，所以这里做一个判断，能解就接，不能接就换
+      // It should be noted here that sometimes the returned key string will be wrong when parsed with utf-8
+      // For example, an infohash is encoded by latin1, and it will be wrong to decode it with utf-8.
+      // However, it is stipulated in the specification that utf8 is almost always used
       if (keyBuffer is! String) {
         try {
           keyBuffer = utf8.decode(keyBuffer);
@@ -260,7 +263,7 @@ class _Decode {
     var end = find(END_OF_TYPE);
     var number = getIntFromBuffer(_data, _position + 1, end);
 
-    _position += end + 1 - _position;
+    _position = end + 1;
 
     return number;
   }

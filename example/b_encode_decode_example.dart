@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:bencode_dart/bencode_dart.dart' as bencode;
+import 'package:b_encode_decode/b_encode_decode.dart' as bencode;
 
 void main() {
   print(String.fromCharCodes(bencode.encode('string'))); // => "6:string"

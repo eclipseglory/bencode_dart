@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:bencode_dart/bencode_dart.dart';
+import 'package:b_encode_decode/b_encode_decode.dart';
 import 'package:test/test.dart';
 
 /// All tests come from https://github.com/benjreinhart/bencode-js/blob/master/test
@@ -148,7 +148,14 @@ void main() {
       var c = 'i2222222222e';
       assert(c == bytesToString(re));
     });
-
+    test('It throws an exeption when passed -0', () {
+      expect(() => encode(-0), throwsException);
+    });
+    test('It encodes integers with leading zeros', () {
+      var re = encode(00002);
+      var c = 'i2e';
+      assert(c == bytesToString(re));
+    });
     test('It encodes a list as l<list items>e', () {
       var re = encode(['a string', 23]);
       var c = 'l8:a stringi23ee';
@@ -197,7 +204,7 @@ void main() {
 }
 
 Uint8List stringToBytes(str) {
-  return utf8.encode(str);
+  return Uint8List.fromList(utf8.encode(str));
 }
 
 int bytesToInt(bytes) {
